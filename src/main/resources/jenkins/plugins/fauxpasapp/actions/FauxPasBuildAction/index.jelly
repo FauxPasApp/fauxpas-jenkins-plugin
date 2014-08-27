@@ -1,0 +1,90 @@
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
+
+<style>
+table.diagnostics {
+    white-space: normal;
+    word-wrap: break-word;
+    table-layout: fixed;
+}
+table.diagnostics td.monospaced {
+    font-family: Courier, Courier New, monospace;
+}
+table.diagnostics td.short, table.diagnostics th.short {
+    width: 100px;
+}
+table.diagnostics td.short {
+    text-align: center;
+}
+table.diagnostics .file-snippet > .content {
+    padding: 10px;
+    margin: 5px 0;
+    white-space: pre;
+    word-wrap: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-height: 103px;
+    background: #ccc;
+}
+</style>
+
+<j:set var="diagnosticsSet" value="${it.loadDiagnosticsSet()}"/>
+
+<l:layout title="Faux Pas">
+    <l:main-panel>
+        <h2>Faux Pas report for build #${diagnosticsSet.buildNumber}</h2>
+
+        <table border="1px" class="sortable pane diagnostics">
+            <tr>
+                <th>Rule + Description</th>
+                <th>Position</th>
+                <th class="short">Severity</th>
+                <th class="short">Impact</th>
+                <th class="short">Confidence</th>
+            </tr>
+        
+            <j:forEach var="diagnostic" items="${diagnosticsSet.diagnostics}">
+                <tr style="background-color: ${diagnostic.getSeverityCSSColorString()}">
+                    <td>
+                        <strong>${diagnostic.ruleNameHTML}</strong>
+                        <p>
+                            <j:choose>
+                                <j:when test="${diagnostic.infoHTML != null}">
+                                    ${diagnostic.infoHTML}
+                                </j:when>
+                                <j:otherwise>
+                                    ${diagnostic.ruleDescriptionHTML}
+                                </j:otherwise>
+                            </j:choose>
+                        </p>
+                    </td>
+                    <td class="monospaced">
+                        <div class="position">
+                            <j:if test="${diagnostic.filePath != null}">
+                                <st:out value="${diagnostic.getShortFilePath()}"/>
+                                <j:if test="${diagnostic.hasFilePositionInfo()}">
+                                    <span> [${diagnostic.startLine}:${diagnostic.startUTF16UnitColumn}—${diagnostic.endLine}:${diagnostic.endUTF16UnitColumn}]</span>
+                                </j:if>
+                            </j:if>
+                        </div>
+                        <j:if test="${diagnostic.fileSnippet != null}">
+                            <div class="file-snippet">
+                                <div class="content"><st:out value="${diagnostic.fileSnippet}"/></div>
+                            </div>
+                        </j:if>
+                    </td>
+                    <td data="${diagnostic.severity}" class="short">
+                        <st:out value="${diagnostic.severityDescription}"/>
+                    </td>
+                    <td class="short">
+                        <st:out value="${diagnostic.impact}"/>
+                    </td>
+                    <td data="${diagnostic.confidence}" class="short">
+                        <st:out value="${diagnostic.confidenceDescription}"/>
+                    </td>
+                </tr>
+            </j:forEach>
+        </table>
+    </l:main-panel>
+</l:layout>
+    
+</j:jelly>

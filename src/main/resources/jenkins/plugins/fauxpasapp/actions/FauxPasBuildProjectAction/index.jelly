@@ -1,0 +1,16 @@
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
+
+<l:layout>
+
+    <l:main-panel>
+        <h1>Faux Pas Diagnostics Trend</h1>
+
+        <l:main-panel>
+            <img src="graph?width=800&amp;height=600" lazymap="map?width=800&amp;height=600"/>
+        </l:main-panel>
+        
+    </l:main-panel>
+    
+</l:layout>
+
+</j:jelly>

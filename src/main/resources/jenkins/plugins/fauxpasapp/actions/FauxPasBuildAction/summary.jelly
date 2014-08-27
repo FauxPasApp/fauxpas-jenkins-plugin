@@ -1,0 +1,12 @@
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form" xmlns:i="jelly:fmt">
+    
+    <t:summary icon="/plugin/fauxpasapp-plugin/icons/fauxpas-48x48.png">
+
+        ${it.getTotalDiagnosticsCount()} diagnostics found.
+        
+        <br/>
+        <a href="${it.getUrlName()}">details</a>
+        
+    </t:summary>
+    
+</j:jelly>

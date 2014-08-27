@@ -1,0 +1,108 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  
+  <modelVersion>4.0.0</modelVersion>
+  
+  <parent>
+        <groupId>org.jenkins-ci.plugins</groupId>
+        <artifactId>plugin</artifactId>
+        <version>1.576</version>
+  </parent>
+
+  <groupId>jenkins.plugins.fauxpasapp</groupId>
+  <artifactId>fauxpasapp-plugin</artifactId>
+  <name>Faux Pas Plugin</name>
+  <version>0.1</version>
+  <packaging>hpi</packaging>
+  <description>Run the Faux Pas static checker on Xcode projects.</description>
+  <url>http://fauxpasapp.com</url>
+  
+  <scm>
+    <connection>scm:git:git://github.com/FauxPasApp/fauxpas-jenkins-plugin.git</connection>
+    <developerConnection>scm:git:git@github.com:FauxPasApp/fauxpas-jenkins-plugin.git</developerConnection>
+    <url>https://github.com/FauxPasApp/fauxpas-jenkins-plugin</url>
+  </scm>
+
+  <developers>
+     <developer>
+       <id></id>
+       <name>Ali Rantakari</name>
+       <email>dev@fauxpasapp.com</email>
+     </developer>
+  </developers>
+  
+  <repositories>
+    <repository>
+      <id>repo.jenkins-ci.org</id>
+      <url>http://repo.jenkins-ci.org/public/</url>
+    </repository>
+  </repositories>
+
+  <pluginRepositories>
+    <pluginRepository>
+      <id>repo.jenkins-ci.org</id>
+      <url>http://repo.jenkins-ci.org/public/</url>
+    </pluginRepository>
+  </pluginRepositories>
+  
+  <dependencies>
+    <dependency>
+      <groupId>org.json</groupId>
+      <artifactId>json</artifactId>
+      <version>20140107</version>
+    </dependency>
+  </dependencies>
+  
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>2.0.2</version>
+        <configuration>
+          <source>1.6</source>
+          <target>1.6</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>cobertura-maven-plugin</artifactId>
+        <version>2.4</version>
+        <configuration>
+          <instrumentation>
+            <ignores>
+              <ignore>jenkins.plugins.fauxpasapp.*</ignore>
+            </ignores>
+            <excludes>
+              <exclude>jenkins/plugins/fauxpasapp/**/*Test.class</exclude>
+            </excludes>
+          </instrumentation>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>clean</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+  
+  <distributionManagement>
+    <repository>
+      <id>maven.jenkins-ci.org</id>
+      <url>http://maven.jenkins-ci.org:8081/content/repositories/releases/</url>
+    </repository>
+  </distributionManagement>
+  
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>cobertura-maven-plugin</artifactId>
+        <version>2.4</version>
+      </plugin>
+    </plugins>
+  </reporting>
+  
+</project>
